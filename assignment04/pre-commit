@@ -1,0 +1,11 @@
+#!/bin/bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$BRANCH" = "main" ]; then
+    echo "Running tests before commit on main branch..."
+    pytest test.py
+    if [ $? -ne 0 ]; then
+        echo "Tests failed. Commit aborted."
+        exit 1
+    fi
+fi
